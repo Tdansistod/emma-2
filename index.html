@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Cumple de Emma - 2 añitos</title>
+    <meta
+      name="description"
+      content="Estás invitado al cumple de Emma: 21 de noviembre, 16:00 hs, Club Sixty, Villa Fabiana Norte. Temática hawaiana."
+    />
+    <meta name="theme-color" content="#8fd3f0" />
+
+    <!-- Vista previa en WhatsApp: reemplazá TU-DOMINIO por el dominio real de Vercel (la URL de la imagen debe ser absoluta) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Estás invitado al cumple de Emma 🌺" />
+    <meta
+      property="og:description"
+      content="21 de noviembre, 16:00 hs. Club Sixty, Villa Fabiana Norte."
+    />
+    <meta
+      property="og:image"
+      content="https://TU-DOMINIO.vercel.app/assets/preview.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Yellowtail&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --navy: #26387f;
+        --azul: #3a5bbf;
+        --pink: #e8457c;
+        --sky: #8fd3f0;
+        --papel: rgba(255, 255, 255, 0.8);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: Lora, Georgia, serif;
+        color: var(--navy);
+        background: var(--sky);
+        overflow-x: hidden;
+        min-height: 100dvh;
+      }
+      body.locked {
+        overflow: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: url(assets/fondo.jpg) center/cover;
+      }
+      .bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          rgba(255, 255, 255, 0.5),
+          rgba(255, 255, 255, 0.18) 45%,
+          rgba(255, 255, 255, 0.32)
+        );
+      }
+      :focus-visible {
+        outline: 3px solid var(--pink);
+        outline-offset: 3px;
+      }
+
+      /* ---------- Entrada ---------- */
+      #entrada {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: grid;
+        place-content: center;
+        background: url(assets/fondo.jpg) center/cover;
+        transition:
+          opacity 0.9s,
+          visibility 0.9s;
+      }
+      #entrada.fuera {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #entrada button {
+        display: grid;
+        justify-items: center;
+        gap: 0.5rem;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        color: var(--navy);
+        -webkit-tap-highlight-color: transparent;
+      }
+      #entrada img {
+        width: min(76vw, 340px);
+        animation: latido 2.6s ease-in-out infinite;
+        filter: drop-shadow(0 14px 18px rgba(30, 60, 120, 0.3));
+      }
+      #entrada span {
+        font:
+          2.1rem/1 Yellowtail,
+          cursive;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(30, 60, 140, 0.55);
+      }
+      @keyframes latido {
+        50% {
+          transform: scale(1.05) rotate(2deg);
+        }
+      }
+
+      /* ---------- Capas animadas ---------- */
+      #petalos {
+        position: fixed;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .petalo {
+        position: absolute;
+        top: 0;
+        left: var(--x);
+        width: var(--s);
+        opacity: 0.88;
+        animation: caer var(--t) linear var(--d) infinite;
+        will-change: transform;
+      }
+      @keyframes caer {
+        0% {
+          transform: translate3d(0, -12vh, 0) rotate(0);
+        }
+        50% {
+          transform: translate3d(var(--dx), 55vh, 0) rotate(180deg);
+        }
+        100% {
+          transform: translate3d(0, 115vh, 0) rotate(360deg);
+        }
+      }
+      .pez {
+        position: absolute;
+        left: 0;
+        top: var(--y);
+        width: var(--w);
+        z-index: 1;
+        animation: nada var(--t) linear var(--d) infinite;
+      }
+      .pez img {
+        animation: bob 2.8s ease-in-out infinite alternate;
+      }
+      .pez.r {
+        animation-name: nadaR;
+      }
+      @keyframes nada {
+        from {
+          transform: translateX(110vw);
+        }
+        to {
+          transform: translateX(-30vw);
+        }
+      }
+      @keyframes nadaR {
+        from {
+          transform: translateX(-30vw);
+        }
+        to {
+          transform: translateX(110vw);
+        }
+      }
+      @keyframes bob {
+        to {
+          transform: translateY(-10px) rotate(-4deg);
+        }
+      }
+
+      /* ---------- Portada ---------- */
+      .hero {
+        position: relative;
+        min-height: 100dvh;
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        text-align: center;
+        padding: 6rem 1.25rem 4rem;
+        overflow: hidden;
+      }
+      .hero > *:not(.f):not(.pez) {
+        position: relative;
+        z-index: 2;
+      }
+      .f {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        transform: rotate(var(--r));
+        animation: mece 7s ease-in-out infinite alternate;
+      }
+      @keyframes mece {
+        to {
+          transform: rotate(calc(var(--r) + 10deg)) scale(1.05);
+        }
+      }
+      .titulo {
+        font:
+          400 clamp(3.2rem, 15vw, 4.9rem)/1.02 Yellowtail,
+          cursive;
+        color: var(--azul);
+        text-shadow: 0 2px 0 rgba(255, 255, 255, 0.7);
+      }
+      .titulo span {
+        display: block;
+        clip-path: inset(-25% 100% -25% 0);
+      }
+      .open .titulo span {
+        animation: escribir 1.5s ease-out forwards;
+      }
+      .open .titulo span + span {
+        animation-delay: 1.4s;
+      }
+      @keyframes escribir {
+        to {
+          clip-path: inset(-25% -6% -25% -6%);
+        }
+      }
+
+      .musica {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-top: 1.1rem;
+        padding: 0.4rem 1.1rem 0.4rem 0.4rem;
+        border: 0;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.88);
+        color: var(--navy);
+        font:
+          600 0.95rem Lora,
+          serif;
+        cursor: pointer;
+        box-shadow: 0 6px 16px rgba(38, 56, 127, 0.2);
+      }
+      .musica img {
+        width: 38px;
+        height: 38px;
+        animation: giro 6s linear infinite paused;
+      }
+      .musica.on img {
+        animation-play-state: running;
+      }
+      .musica svg {
+        width: 16px;
+        height: 16px;
+        fill: var(--pink);
+      }
+      .musica .ic-pausa,
+      .musica.on .ic-play {
+        display: none;
+      }
+      .musica.on .ic-pausa {
+        display: block;
+      }
+      @keyframes giro {
+        to {
+          rotate: 360deg;
+        }
+      }
+
+      .nombre {
+        margin-top: 1.5rem;
+        font:
+          400 clamp(2.7rem, 12.5vw, 4rem)/1.05 Yellowtail,
+          cursive;
+        color: var(--pink);
+        text-shadow: 0 3px 0 #fff;
+      }
+      .edad {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font:
+          2rem Yellowtail,
+          cursive;
+        color: var(--azul);
+      }
+      .edad b {
+        display: inline-block;
+        font:
+          400 8.5rem/0.9 Yellowtail,
+          cursive;
+        color: var(--pink);
+        -webkit-text-stroke: 3px #fff;
+        paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(232, 69, 124, 0.2);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .open .edad b {
+        animation:
+          rebote 1s 2.8s both cubic-bezier(0.3, 1.6, 0.5, 1),
+          vaiven 3s 3.9s ease-in-out infinite alternate;
+      }
+      @keyframes rebote {
+        from {
+          transform: scale(0) rotate(-25deg);
+        }
+        to {
+          transform: none;
+        }
+      }
+      @keyframes vaiven {
+        to {
+          transform: rotate(5deg) scale(1.04);
+        }
+      }
+      .baja {
+        position: absolute !important;
+        bottom: 1.1rem;
+        width: 26px;
+        fill: none;
+        stroke: var(--navy);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        animation: baja 1.6s ease-in-out infinite;
+      }
+      @keyframes baja {
+        50% {
+          transform: translateY(7px);
+        }
+      }
+
+      /* ---------- Tarjetas ---------- */
+      .info {
+        display: grid;
+        gap: 1.1rem;
+        max-width: 460px;
+        margin: 0 auto;
+        padding: 1rem 1.25rem 2rem;
+      }
+      .card {
+        text-align: center;
+        padding: 1.4rem 1.2rem 1.5rem;
+        background: var(--papel);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 2px solid #fff;
+        border-radius: 30px 30px 30px 10px;
+        box-shadow: 0 12px 30px rgba(38, 100, 160, 0.18);
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.8s,
+          transform 0.8s;
+      }
+      .card:nth-child(even) {
+        border-radius: 30px 30px 10px 30px;
+      }
+      .card.ver {
+        opacity: 1;
+        transform: none;
+      }
+      .card h3 {
+        font:
+          400 2.2rem/1 Yellowtail,
+          cursive;
+        color: var(--pink);
+      }
+      .card p {
+        font-size: 1.15rem;
+        line-height: 1.5;
+        margin-top: 0.35rem;
+      }
+      .card .grande {
+        font:
+          700 1.5rem/1.25 Lora,
+          serif;
+      }
+      .card .flor {
+        width: 46px;
+        margin: 0 auto 0.4rem;
+      }
+      .cuenta {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+      }
+      .cuenta div {
+        background: #fff;
+        border-radius: 16px;
+        padding: 0.65rem 0.2rem;
+      }
+      .cuenta b {
+        display: block;
+        font:
+          700 1.75rem Lora,
+          serif;
+        color: var(--pink);
+        font-variant-numeric: tabular-nums;
+      }
+      .cuenta small {
+        font-size: 0.78rem;
+      }
+      .aloha {
+        width: 120px;
+        margin: 0 auto 0.3rem;
+      }
+      article .aloha {
+        width: 230px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding: 0.85rem 1.5rem;
+        border: 0;
+        border-radius: 99px;
+        background: var(--navy);
+        color: #fff;
+        font:
+          600 1rem Lora,
+          serif;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .btn:active {
+        transform: scale(0.96);
+      }
+      .btn.rosa {
+        background: var(--pink);
+      }
+      .btn.claro {
+        background: #fff;
+        color: var(--navy);
+        box-shadow: inset 0 0 0 2px var(--navy);
+      }
+      .btn svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+      }
+
+      /* ---------- Pie ---------- */
+      .pie {
+        position: relative;
+        height: 300px;
+        overflow: hidden;
+      }
+      .pie h2 {
+        position: relative;
+        z-index: 2;
+        padding-top: 1rem;
+        text-align: center;
+        font:
+          400 3rem Yellowtail,
+          cursive;
+        color: var(--azul);
+        text-shadow: 0 2px 0 #fff;
+      }
+      .palma {
+        position: absolute;
+        bottom: 26px;
+        width: 34vw;
+        max-width: 170px;
+        transform-origin: 50% 100%;
+        animation: mecer 5s ease-in-out infinite alternate;
+      }
+      .palma.izq {
+        left: -6px;
+      }
+      .palma.der {
+        right: -6px;
+        --s: -1;
+      }
+      @keyframes mecer {
+        from {
+          transform: scaleX(var(--s, 1)) rotate(-2deg);
+        }
+        to {
+          transform: scaleX(var(--s, 1)) rotate(3deg);
+        }
+      }
+      .ola {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 200vw;
+        height: 80px;
+        animation: ola 9s linear infinite;
+        z-index: 4;
+      }
+      .ola.b {
+        bottom: -18px;
+        z-index: 5;
+        height: 74px;
+        animation-duration: 14s;
+        animation-direction: reverse;
+      }
+      @keyframes ola {
+        to {
+          transform: translateX(-100vw);
+        }
+      }
+
+      .foto {
+        position: relative;
+        width: min(62vw, 250px);
+        margin: 1.3rem auto 0;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 12px 28px rgba(38, 56, 127, 0.25);
+        rotate: -3deg;
+      }
+      .foto img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+      }
+      .foto::after {
+        content: "";
+        position: absolute;
+        right: -9%;
+        top: -7%;
+        width: 36%;
+        aspect-ratio: 1;
+        background: url(assets/flor-hibisco.webp) center/contain no-repeat;
+      }
+
+      .barco {
+        position: absolute;
+        left: 50%;
+        bottom: 20px;
+        z-index: 3;
+        width: min(44vw, 190px);
+        translate: -50% 0;
+        transform-origin: 50% 100%;
+        animation: barco-flotando 2.8s ease-in-out infinite;
+        filter: drop-shadow(0 8px 10px rgba(30, 60, 120, 0.25));
+      }
+      @keyframes barco-flotando {
+        0%,
+        100% {
+          transform: rotate(-3deg);
+        }
+        25% {
+          transform: rotate(3deg) translateY(-8px);
+        }
+        50% {
+          transform: rotate(-2deg);
+        }
+        75% {
+          transform: rotate(4deg) translateY(-5px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="locked">
+    <div class="bg"></div>
+
+    <!-- Pantalla de entrada: el toque habilita la música -->
+    <div id="entrada">
+      <button id="abrir" aria-label="Abrir la invitación">
+        <img src="assets/aloha.webp" alt="" />
+        <span>Toca para abrir</span>
+      </button>
+    </div>
+
+    <div id="petalos" aria-hidden="true"></div>
+    <audio id="musica" src="assets/musica.mp3" loop preload="auto"></audio>
+
+    <main>
+      <header class="hero">
+        <!-- flores de las esquinas -->
+        <img
+          class="f"
+          style="--r: -15deg; top: -34px; left: -44px; width: 150px"
+          src="assets/flor-hibisco.webp"
+          alt=""
+        />
+        <img
+          class="f"
+          style="--r: 10deg; top: -26px; left: 78px; width: 96px"
+          src="assets/flor-lila.webp"
+          alt=""
+        />
+        <img
+          class="f"
+          style="--r: 0deg; top: 92px; left: -10px; width: 78px"
+          src="assets/flor-plumeria.webp"
+          alt=""
+        />
+        <img
+          class="f"
+          style="--r: 20deg; top: -30px; right: -36px; width: 126px"
+          src="assets/flor-rosa.webp"
+          alt=""
+        />
+        <img
+          class="f"
+          style="--r: -8deg; top: 70px; right: -20px; width: 84px"
+          src="assets/flor-celeste.webp"
+          alt=""
+        />
+        <img
+          class="f"
+          style="--r: 15deg; bottom: 30px; left: -34px; width: 112px"
+          src="assets/flor-violeta.webp"
+          alt=""
+        />
+        <img
+          class="f"
+          style="--r: -20deg; bottom: 50px; right: -30px; width: 104px"
+          src="assets/flor-amarilla.webp"
+          alt=""
+        />
+
+        <!-- peces -->
+        <div class="pez" style="--y: 9%; --w: 56px; --t: 24s; --d: -6s">
+          <img src="assets/pez-celeste.webp" alt="" />
+        </div>
+        <div class="pez r" style="--y: 17%; --w: 44px; --t: 30s; --d: -18s">
+          <img src="assets/pez-rosa.webp" alt="" />
+        </div>
+        <div class="pez" style="--y: 84%; --w: 52px; --t: 27s; --d: -12s">
+          <img src="assets/pez-amarillo.webp" alt="" />
+        </div>
+        <div class="pez" style="--y: 92%; --w: 46px; --t: 21s; --d: -2s">
+          <img src="assets/pez-violeta.webp" alt="" />
+        </div>
+
+        <h1 class="titulo"><span>Te invito</span><span>a mi cumple</span></h1>
+        <figure class="foto"><img src="assets/emma.webp" alt="Emma" /></figure>
+        <h2 class="nombre">Emma</h2>
+
+        <div class="edad">
+          <span>mis</span><b id="dos">2</b><span>añitos</span>
+        </div>
+        <button
+          class="musica"
+          id="btnMusica"
+          type="button"
+          aria-pressed="false"
+        >
+          <img src="assets/flor-hibisco.webp" alt="" />
+          <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 4l14 8-14 8z" />
+          </svg>
+          <svg class="ic-pausa" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+          </svg>
+          <span id="txtMusica">Reproducir música</span>
+        </button>
+      </header>
+
+      <section class="info">
+        <article class="card">
+          <img class="flor" src="assets/flor-plumeria.webp" alt="" />
+          <h3>Cuándo</h3>
+          <p class="grande">Sábado 21 de noviembre</p>
+          <p>A las 16:00 hs</p>
+        </article>
+
+        <article class="card">
+          <img class="flor" src="assets/flor-rosa-clara.webp" alt="" />
+          <h3>Dónde</h3>
+          <p class="grande">Club Sixty</p>
+          <p>Villa Fabiana Norte</p>
+          <a
+            class="btn"
+            target="_blank"
+            rel="noopener"
+            href="https://www.google.com/maps/place/Sixty+Rugby+Club/@-28.503185,-62.7888393,6.39z/data=!4m10!1m2!2m1!1sSixty+Rugby+Club+Villa+Fabiana+Norte!3m6!1s0x94450d9747439c07:0xd1eabe74fb8bd029!8m2!3d-27.4233475!4d-58.9388287!15sCiRTaXh0eSBSdWdieSBDbHViIFZpbGxhIEZhYmlhbmEgTm9ydGVaJiIkc2l4dHkgcnVnYnkgY2x1YiB2aWxsYSBmYWJpYW5hIG5vcnRlkgEKcnVnYnlfY2x1YpoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VRdGVHWXpUalpCUlJBQuABAPoBBAgAECA!16s%2Fg%2F11xwcrs2x?entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5z"
+              />
+            </svg>
+            Cómo llegar
+          </a>
+        </article>
+
+        <article class="card">
+          <h3>Falta poco</h3>
+          <div class="cuenta" id="cuenta" role="timer" aria-live="off">
+            <div><b id="d">--</b><small>días</small></div>
+            <div><b id="h">--</b><small>horas</small></div>
+            <div><b id="m">--</b><small>min</small></div>
+            <div><b id="s">--</b><small>seg</small></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="aloha" src="assets/stitch.png" alt="" />
+          <h3>Temática hawaiana</h3>
+          <p>¡Vení con tu mejor look de flores!</p>
+        </article>
+
+        <article class="card">
+          <h3>¿Venís a la fiesta?</h3>
+          <a
+            class="btn rosa"
+            target="_blank"
+            rel="noopener"
+            href="https://wa.me/5492944486963?text=%C2%A1Hola!%20Confirmo%20mi%20asistencia%20al%20cumple%20de%20Emma%20%F0%9F%8C%BA%20Nombre%3A%20"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2a10 10 0 0 0-8.500 15.200L2 22l4.900-1.500A10 10 0 1 0 12 2zm5.800 14.100c-.2.700-1.400 1.300-1.900 1.300-.5.100-1.100.100-1.800-.1-.4-.1-1-.3-1.700-.6-3-1.300-4.900-4.300-5.100-4.500-.1-.2-1.200-1.600-1.200-3s.8-2.100 1-2.400c.3-.3.600-.3.800-.3h.6c.2 0 .4 0 .6.500l.8 2c.1.100.1.300 0 .5l-.3.500-.4.500c-.1.200-.3.300-.1.600.2.300.7 1.200 1.500 1.900 1 .9 1.900 1.200 2.200 1.300.3.100.4.100.6-.1l.8-1c.2-.3.400-.2.600-.1l1.900.9c.3.100.5.200.5.300.1.200.1.800-.1 1.500z"
+              />
+            </svg>
+            Confirmar asistencia
+          </a>
+          <br />
+          <button class="btn claro" id="btnCal" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z"
+              />
+            </svg>
+            Agregar al calendario
+          </button>
+        </article>
+      </section>
+
+      <footer class="pie">
+        <h2>¡Te esperamos!</h2>
+        <img class="palma izq" src="assets/palmera.webp" alt="" />
+        <img class="palma der" src="assets/palmera.webp" alt="" />
+
+        <img class="barco" src="assets/barco.webp" alt="Barco flotando" />
+
+        <svg
+          class="ola"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            fill="#7cc8ee"
+            fill-opacity=".85"
+            d="M0 50Q150 0 300 50T600 50T900 50T1200 50V120H0z"
+          />
+        </svg>
+        <svg
+          class="ola b"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            fill="#4fa9e0"
+            fill-opacity=".9"
+            d="M0 60Q150 10 300 60T600 60T900 60T1200 60V120H0z"
+          />
+        </svg>
+      </footer>
+    </main>
+
+    <script>
+      (() => {
+        const $ = (id) => document.getElementById(id);
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const flores = [
+          "flor-hibisco",
+          "flor-rosa",
+          "flor-plumeria",
+          "flor-rosa-clara",
+          "flor-lila",
+          "flor-celeste",
+          "flor-amarilla",
+          "flor-violeta",
+        ].map((n) => `assets/${n}.webp`);
+        const audio = $("musica"),
+          btn = $("btnMusica");
+        audio.volume = 0.6;
+
+        /* Música */
+        let sonando = false,
+          estabaSonando = false;
+        const marcar = (on) => {
+          sonando = on;
+          btn.classList.toggle("on", on);
+          btn.setAttribute("aria-pressed", on);
+          $("txtMusica").textContent = on
+            ? "Pausar música"
+            : "Reproducir música";
+        };
+        const reproducir = () =>
+          audio
+            .play()
+            .then(() => marcar(true))
+            .catch(() => marcar(false));
+        btn.addEventListener("click", () =>
+          sonando ? (audio.pause(), marcar(false)) : reproducir(),
+        );
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            estabaSonando = sonando;
+            audio.pause();
+            marcar(false);
+          } else if (estabaSonando) {
+            reproducir();
+            estabaSonando = false;
+          }
+        });
+
+        /* Pétalos que caen */
+        function petalos() {
+          if (reduce) return;
+          const capa = $("petalos");
+          for (let i = 0; i < 12; i++) {
+            const p = document.createElement("img");
+            p.className = "petalo";
+            p.alt = "";
+            p.src = flores[i % flores.length];
+            p.style.cssText = `--x:${Math.random() * 92}%;--s:${18 + Math.random() * 18}px;--t:${11 + Math.random() * 9}s;--d:${-Math.random() * 16}s;--dx:${(Math.random() - 0.5) * 120}px`;
+            capa.appendChild(p);
+          }
+        }
+
+        /* Confeti de flores */
+        function confeti(x, y, n = 26) {
+          if (reduce) return;
+          for (let i = 0; i < n; i++) {
+            const c = document.createElement("img");
+            c.src = flores[i % flores.length];
+            c.alt = "";
+            const s = 20 + Math.random() * 22;
+            c.style.cssText = `position:fixed;z-index:60;pointer-events:none;left:${x - s / 2}px;top:${y - s / 2}px;width:${s}px`;
+            document.body.appendChild(c);
+            const a = Math.random() * Math.PI * 2,
+              d = 90 + Math.random() * 190;
+            const dx = Math.cos(a) * d,
+              dy = Math.sin(a) * d - 80,
+              r = (Math.random() - 0.5) * 720;
+            c.animate(
+              [
+                { transform: "translate(0,0) scale(.3) rotate(0)", opacity: 1 },
+                {
+                  transform: `translate(${dx}px,${dy}px) scale(1) rotate(${r / 2}deg)`,
+                  opacity: 1,
+                  offset: 0.45,
+                },
+                {
+                  transform: `translate(${dx * 1.15}px,${dy + 320}px) scale(.9) rotate(${r}deg)`,
+                  opacity: 0,
+                },
+              ],
+              {
+                duration: 1800 + Math.random() * 900,
+                easing: "cubic-bezier(.2,.7,.4,1)",
+              },
+            ).onfinish = () => c.remove();
+          }
+        }
+
+        /* Abrir invitación */
+        $("abrir").addEventListener("click", () => {
+          reproducir();
+          $("entrada").classList.add("fuera");
+          document.body.classList.remove("locked");
+          document.body.classList.add("open");
+          petalos();
+          confeti(innerWidth / 2, innerHeight / 2, 34);
+          setTimeout(() => {
+            const r = $("dos").getBoundingClientRect();
+            confeti(r.left + r.width / 2, r.top + r.height / 2, 22);
+          }, 3300);
+        });
+        $("dos").addEventListener("click", (e) =>
+          confeti(e.clientX, e.clientY, 18),
+        );
+
+        /* Tarjetas al hacer scroll */
+        const io = new IntersectionObserver(
+          (es) =>
+            es.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("ver");
+                io.unobserve(e.target);
+              }
+            }),
+          { threshold: 0.25 },
+        );
+        document.querySelectorAll(".card").forEach((c) => io.observe(c));
+
+        /* Cuenta regresiva (21/11/2026, 16:00 hora de Argentina) */
+        const meta = new Date("2026-11-21T16:00:00-03:00");
+        const pad = (n) => String(n).padStart(2, "0");
+        function cuenta() {
+          let t = Math.floor((meta - Date.now()) / 1000);
+          if (t <= 0) {
+            $("cuenta").innerHTML =
+              '<p class="grande" style="grid-column:1/-1">¡Hoy es la fiesta! 🌺</p>';
+            return;
+          }
+          $("d").textContent = Math.floor(t / 86400);
+          $("h").textContent = pad(Math.floor((t % 86400) / 3600));
+          $("m").textContent = pad(Math.floor((t % 3600) / 60));
+          $("s").textContent = pad(t % 60);
+          setTimeout(cuenta, 1000);
+        }
+        cuenta();
+
+        /* Agregar al calendario (.ics) */
+        $("btnCal").addEventListener("click", () => {
+          const txt = [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//Cumple Emma//ES",
+            "BEGIN:VEVENT",
+            "UID:cumple-emma-2026@invitacion",
+            "DTSTAMP:20261104T000000Z",
+            "DTSTART:20261121T190000Z",
+            "DTEND:20261121T220000Z",
+            "SUMMARY:Cumple de Emma (2 añitos)",
+            "LOCATION:Club Sixty\\, Villa Fabiana Norte",
+            "DESCRIPTION:Temática hawaiana. ¡Vení con tu mejor look de flores!",
+            "END:VEVENT",
+            "END:VCALENDAR",
+          ].join("\r\n");
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(
+            new Blob([txt], { type: "text/calendar;charset=utf-8" }),
+          );
+          a.download = "cumple-emma.ics";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        });
+      })();
+    </script>
+  </body>
+</html>
