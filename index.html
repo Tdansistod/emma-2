@@ -702,7 +702,7 @@
         </div>
 
         <h1 class="titulo"><span>Te invito</span><span>a mi cumple</span></h1>
-        <figure class="foto"><img decoding="async" fetchpriority="low" src="assets/emma.webp" alt="Emma" /></figure>
+        <figure class="foto"><img decoding="sync" src="assets/emma.webp" alt="Emma" /></figure>
         <h2 class="nombre">Emma</h2>
 
         <div class="edad">
@@ -936,19 +936,38 @@
         }
 
         /* Abrir invitación */
-        $("abrir").addEventListener("click", () => {
-          reproducir();
-          $("entrada").classList.add("fuera");
-          document.body.classList.remove("locked");
-          document.body.classList.add("open");
-          petalos();
-          setTimeout(() => $("entrada").remove(), 1200);
-          confeti(innerWidth / 2, innerHeight / 2, 34);
-          setTimeout(() => {
-            const r = $("dos").getBoundingClientRect();
-            confeti(r.left + r.width / 2, r.top + r.height / 2, 22);
-          }, 3300);
-        });
+        const decodificar = (i) =>
+          i.complete
+            ? i.decode().catch(() => {})
+            : new Promise((ok) => {
+                i.addEventListener("load", () => i.decode().then(ok, ok), { once: true });
+                i.addEventListener("error", ok, { once: true });
+              });
+        const portadaLista = Promise.all(
+          [...document.querySelectorAll(".hero img")].map(decodificar),
+        );
+        $("abrir").addEventListener(
+          "click",
+          () => {
+            reproducir(); // dentro del toque, para que el audio quede habilitado
+            Promise.race([
+              portadaLista,
+              new Promise((ok) => setTimeout(ok, 2500)),
+            ]).then(() => {
+              $("entrada").classList.add("fuera");
+              document.body.classList.remove("locked");
+              document.body.classList.add("open");
+              petalos();
+              setTimeout(() => $("entrada").remove(), 1200);
+              confeti(innerWidth / 2, innerHeight / 2, 34);
+              setTimeout(() => {
+                const r = $("dos").getBoundingClientRect();
+                confeti(r.left + r.width / 2, r.top + r.height / 2, 22);
+              }, 3300);
+            });
+          },
+          { once: true },
+        );
         $("dos").addEventListener("click", (e) =>
           confeti(e.clientX, e.clientY, 18),
         );
