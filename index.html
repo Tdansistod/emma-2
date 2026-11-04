@@ -29,10 +29,22 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="image" href="assets/fondo.jpg" fetchpriority="high" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Yellowtail&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="image"
+      href="assets/aloha.webp"
+      type="image/webp"
+      fetchpriority="high"
     />
+    <link
+      id="fuentes"
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Yellowtail&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Yellowtail&display=swap" /></noscript>
 
     <style>
       :root {
@@ -40,7 +52,7 @@
         --azul: #3a5bbf;
         --pink: #e8457c;
         --sky: #8fd3f0;
-        --papel: rgba(255, 255, 255, 0.8);
+        --papel: rgba(255, 255, 255, 0.9);
       }
       * {
         box-sizing: border-box;
@@ -48,16 +60,25 @@
       }
       html {
         scroll-behavior: smooth;
+        background: var(--sky);
       }
       body {
         font-family: Lora, Georgia, serif;
         color: var(--navy);
-        background: var(--sky);
         overflow-x: hidden;
         min-height: 100dvh;
       }
       body.locked {
         overflow: hidden;
+      }
+      /* Mientras está la pantalla de entrada no se ve ni se anima nada de atrás */
+      body.locked main,
+      body.locked #petalos {
+        visibility: hidden;
+      }
+      body.locked main *,
+      .quieto * {
+        animation-play-state: paused !important;
       }
       img {
         display: block;
@@ -65,7 +86,11 @@
       }
       .bg {
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh; /* respaldo */
+        height: 100lvh; /* alto máximo: no cambia al mostrar/ocultar la barra del navegador */
         z-index: -2;
         background: url(assets/fondo.jpg) center/cover;
       }
@@ -91,10 +116,29 @@
         z-index: 50;
         display: grid;
         place-content: center;
-        background: url(assets/fondo.jpg) center/cover;
+        background: var(--sky);
         transition:
           opacity 0.9s,
           visibility 0.9s;
+      }
+      #entrada::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        height: 100lvh;
+        z-index: -1;
+        background: url(assets/fondo.jpg) center/cover;
+        opacity: 0;
+        transition: opacity 0.7s;
+      }
+      #entrada.listo::before {
+        opacity: 1;
+      }
+      #entrada:not(.listo) button {
+        pointer-events: none;
       }
       #entrada.fuera {
         opacity: 0;
@@ -109,18 +153,23 @@
         cursor: pointer;
         color: var(--navy);
         -webkit-tap-highlight-color: transparent;
+        opacity: 0;
+        transition: opacity 0.7s;
+      }
+      #entrada.listo button {
+        opacity: 1;
       }
       #entrada img {
         width: min(76vw, 340px);
         animation: latido 2.6s ease-in-out infinite;
-        filter: drop-shadow(0 14px 18px rgba(30, 60, 120, 0.3));
       }
       #entrada span {
         font:
           3rem/1 Yellowtail,
           cursive;
         color: #fff;
-        text-shadow: 0 2px 10px rgba(30, 60, 140, 0.55);
+        -webkit-text-stroke: 6px var(--azul);
+        paint-order: stroke fill;
       }
       @keyframes latido {
         50% {
@@ -195,7 +244,8 @@
       /* ---------- Portada ---------- */
       .hero {
         position: relative;
-        min-height: 100dvh;
+        min-height: 100vh;
+        min-height: 100svh;
         display: grid;
         align-content: center;
         justify-items: center;
@@ -309,6 +359,7 @@
         paint-order: stroke fill;
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
+        will-change: transform;
       }
       .open .edad b {
         animation:
@@ -357,8 +408,6 @@
         text-align: center;
         padding: 1.4rem 1.2rem 1.5rem;
         background: var(--papel);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
         border: 2px solid #fff;
         border-radius: 30px 30px 30px 10px;
         opacity: 0;
@@ -503,6 +552,7 @@
         width: 200vw;
         height: 80px;
         animation: ola 9s linear infinite;
+        will-change: transform;
         z-index: 4;
       }
       .ola.b {
@@ -583,54 +633,54 @@
     <!-- Pantalla de entrada: el toque habilita la música -->
     <div id="entrada">
       <button id="abrir" aria-label="Abrir la invitación">
-        <img src="assets/aloha.webp" alt="" />
+        <img src="assets/aloha.webp" alt="" fetchpriority="high" />
         <span>Toca para abrir</span>
       </button>
     </div>
 
     <div id="petalos" aria-hidden="true"></div>
-    <audio id="musica" src="assets/musica.mp3" loop preload="auto"></audio>
+    <audio id="musica" src="assets/musica.mp3" loop preload="none"></audio>
 
     <main>
       <header class="hero">
         <!-- flores de las esquinas -->
-        <img
+        <img decoding="async" fetchpriority="low"
           class="f"
           style="--r: -15deg; top: -34px; left: -44px; width: 150px"
           src="assets/flor-hibisco.webp"
           alt=""
         />
-        <img
+        <img decoding="async" fetchpriority="low"
           class="f"
           style="--r: 10deg; top: -26px; left: 78px; width: 96px"
           src="assets/flor-lila.webp"
           alt=""
         />
-        <img
+        <img decoding="async" fetchpriority="low"
           class="f"
           style="--r: 0deg; top: 92px; left: -10px; width: 78px"
           src="assets/flor-plumeria.webp"
           alt=""
         />
-        <img
+        <img decoding="async" fetchpriority="low"
           class="f"
           style="--r: 20deg; top: -30px; right: -36px; width: 126px"
           src="assets/flor-rosa.webp"
           alt=""
         />
-        <img
+        <img decoding="async" fetchpriority="low"
           class="f"
           style="--r: -8deg; top: 70px; right: -20px; width: 84px"
           src="assets/flor-celeste.webp"
           alt=""
         />
-        <img
+        <img decoding="async" fetchpriority="low"
           class="f"
           style="--r: 15deg; bottom: 30px; left: -34px; width: 112px"
           src="assets/flor-violeta.webp"
           alt=""
         />
-        <img
+        <img decoding="async" fetchpriority="low"
           class="f"
           style="--r: -20deg; bottom: 50px; right: -30px; width: 104px"
           src="assets/flor-amarilla.webp"
@@ -639,20 +689,20 @@
 
         <!-- peces -->
         <div class="pez" style="--y: 9%; --w: 56px; --t: 24s; --d: -6s">
-          <img src="assets/pez-celeste.webp" alt="" />
+          <img decoding="async" fetchpriority="low" src="assets/pez-celeste.webp" alt="" />
         </div>
         <div class="pez r" style="--y: 17%; --w: 44px; --t: 30s; --d: -18s">
-          <img src="assets/pez-rosa.webp" alt="" />
+          <img decoding="async" fetchpriority="low" src="assets/pez-rosa.webp" alt="" />
         </div>
         <div class="pez" style="--y: 84%; --w: 52px; --t: 27s; --d: -12s">
-          <img src="assets/pez-amarillo.webp" alt="" />
+          <img decoding="async" fetchpriority="low" src="assets/pez-amarillo.webp" alt="" />
         </div>
         <div class="pez" style="--y: 92%; --w: 46px; --t: 21s; --d: -2s">
-          <img src="assets/pez-violeta.webp" alt="" />
+          <img decoding="async" fetchpriority="low" src="assets/pez-violeta.webp" alt="" />
         </div>
 
         <h1 class="titulo"><span>Te invito</span><span>a mi cumple</span></h1>
-        <figure class="foto"><img src="assets/emma.webp" alt="Emma" /></figure>
+        <figure class="foto"><img decoding="async" fetchpriority="low" src="assets/emma.webp" alt="Emma" /></figure>
         <h2 class="nombre">Emma</h2>
 
         <div class="edad">
@@ -664,7 +714,7 @@
           type="button"
           aria-pressed="false"
         >
-          <img src="assets/flor-hibisco.webp" alt="" />
+          <img decoding="async" fetchpriority="low" src="assets/flor-hibisco.webp" alt="" />
           <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6 4l14 8-14 8z" />
           </svg>
@@ -677,14 +727,14 @@
 
       <section class="info">
         <article class="card">
-          <img class="flor" src="assets/flor-plumeria.webp" alt="" />
+          <img decoding="async" fetchpriority="low" class="flor" src="assets/flor-plumeria.webp" alt="" />
           <h3>Cuándo</h3>
           <p class="grande">Sábado 21 de noviembre</p>
           <p>A las 16:00 hs</p>
         </article>
 
         <article class="card">
-          <img class="flor" src="assets/flor-rosa-clara.webp" alt="" />
+          <img decoding="async" fetchpriority="low" class="flor" src="assets/flor-rosa-clara.webp" alt="" />
           <h3>Dónde</h3>
           <p class="grande">Club Sixty</p>
           <p>Villa Fabiana Norte</p>
@@ -714,7 +764,7 @@
         </article>
 
         <article class="card">
-          <img class="aloha" src="assets/stitch.png" alt="" />
+          <img decoding="async" fetchpriority="low" loading="lazy" class="aloha" src="assets/stitch.png" alt="" />
           <h3>Temática hawaiana</h3>
           <p>¡Vení con tu mejor look de flores!</p>
         </article>
@@ -748,10 +798,10 @@
 
       <footer class="pie">
         <h2>¡Te esperamos!</h2>
-        <img class="palma izq" src="assets/palmera.webp" alt="" />
-        <img class="palma der" src="assets/palmera.webp" alt="" />
+        <img decoding="async" fetchpriority="low" loading="lazy" class="palma izq" src="assets/palmera.webp" alt="" />
+        <img decoding="async" fetchpriority="low" loading="lazy" class="palma der" src="assets/palmera.webp" alt="" />
 
-        <img class="barco" src="assets/barco.webp" alt="Barco flotando" />
+        <img decoding="async" fetchpriority="low" loading="lazy" class="barco" src="assets/barco.webp" alt="Barco flotando" />
 
         <svg
           class="ola"
@@ -793,7 +843,7 @@
           "flor-celeste",
           "flor-amarilla",
           "flor-violeta",
-        ].map((n) => `assets/${n}.webp`);
+        ].map((n) => `assets/mini/${n}.webp`); // versiones chicas para pétalos y confeti
         const audio = $("musica"),
           btn = $("btnMusica");
         audio.volume = 0.6;
@@ -832,7 +882,8 @@
         function petalos() {
           if (reduce) return;
           const capa = $("petalos");
-          for (let i = 0; i < 12; i++) {
+          const n = (navigator.hardwareConcurrency || 4) <= 4 ? 7 : 12;
+          for (let i = 0; i < n; i++) {
             const p = document.createElement("img");
             p.className = "petalo";
             p.alt = "";
@@ -885,6 +936,7 @@
           document.body.classList.remove("locked");
           document.body.classList.add("open");
           petalos();
+          setTimeout(() => $("entrada").remove(), 1200);
           confeti(innerWidth / 2, innerHeight / 2, 34);
           setTimeout(() => {
             const r = $("dos").getBoundingClientRect();
@@ -952,6 +1004,48 @@
           a.click();
           a.remove();
         });
+
+        /* Pantalla de carga: la entrada aparece recién cuando todo lo necesario está listo */
+        const cargar = (src) =>
+          new Promise((ok) => {
+            const i = new Image();
+            i.onload = i.onerror = ok;
+            i.src = src;
+          });
+        const fuentes = new Promise((ok) => {
+          const l = $("fuentes");
+          const listas = () =>
+            document.fonts
+              ? Promise.all([
+                  document.fonts.load("3rem Yellowtail"),
+                  document.fonts.load("600 1rem Lora"),
+                ]).then(ok, ok)
+              : ok();
+          if (l.sheet) listas();
+          else {
+            l.addEventListener("load", listas);
+            l.addEventListener("error", ok);
+          }
+        });
+        Promise.race([
+          Promise.all([cargar("assets/fondo.jpg"), cargar("assets/aloha.webp"), fuentes]),
+          new Promise((ok) => setTimeout(ok, 4000)),
+        ]).then(() => {
+          $("entrada").classList.add("listo");
+          // con la entrada ya visible, se precarga lo demás
+          (window.requestIdleCallback || ((f) => setTimeout(f, 300)))(() => {
+            flores.forEach(cargar);
+            audio.preload = "auto";
+            audio.load();
+          });
+        });
+
+        /* Pausar animaciones de lo que no se ve */
+        const vis = new IntersectionObserver(
+          (es) => es.forEach((e) => e.target.classList.toggle("quieto", !e.isIntersecting)),
+          { rootMargin: "120px" },
+        );
+        document.querySelectorAll(".hero, .pie").forEach((el) => vis.observe(el));
       })();
     </script>
   </body>
