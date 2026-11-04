@@ -882,13 +882,19 @@
         function petalos() {
           if (reduce) return;
           const capa = $("petalos");
-          const n = (navigator.hardwareConcurrency || 4) <= 4 ? 7 : 12;
+          const n = 5; // pocas flores, bien repartidas a lo ancho
           for (let i = 0; i < n; i++) {
+            const t = 12 + Math.random() * 6;
             const p = document.createElement("img");
             p.className = "petalo";
             p.alt = "";
             p.src = flores[i % flores.length];
-            p.style.cssText = `--x:${Math.random() * 92}%;--s:${18 + Math.random() * 18}px;--t:${11 + Math.random() * 9}s;--d:${-Math.random() * 16}s;--dx:${(Math.random() - 0.5) * 120}px`;
+            // si no está la carpeta assets/mini, usa la flor en tamaño normal
+            p.onerror = () => {
+              p.onerror = null;
+              p.src = p.src.replace("/mini/", "/");
+            };
+            p.style.cssText = `--x:${((i + 0.15 + Math.random() * 0.7) * 100) / n}%;--s:${28 + Math.random() * 16}px;--t:${t}s;--d:${-(i / n) * t - Math.random() * 2}s;--dx:${(Math.random() - 0.5) * 120}px`;
             capa.appendChild(p);
           }
         }
